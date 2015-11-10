@@ -1,12 +1,12 @@
-name := """gestalt-security-sdk-scala"""
+name := """gestalt-vertx-sdk"""
 
 organization := "com.galacticfog"
 
-version := "0.1.1-SNAPSHOT"
+version := "0.0.1-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.4"
+scalaVersion := "2.11.5"
 
 publishTo := Some("Artifactory Realm" at "http://galacticfog.artifactoryonline.com/galacticfog/libs-snapshots-local/")
 
@@ -17,7 +17,10 @@ resolvers ++= Seq(
   "snapshots" at "http://scala-tools.org/repo-snapshots",
   "releases"  at "http://scala-tools.org/repo-releases")
 
-libraryDependencies += "com.galacticfog" % "gestalt-io_2.11" % "1.0-SNAPSHOT"
+libraryDependencies ++= Seq(
+	"com.galacticfog" % "gestalt-io_2.11" % "1.0-SNAPSHOT",
+	"com.galacticfog" %% "gestalt-vertx-io" % "0.0.2-SNAPSHOT"
+	)
 
 //
 // Adds project name to prompt like in a Play project

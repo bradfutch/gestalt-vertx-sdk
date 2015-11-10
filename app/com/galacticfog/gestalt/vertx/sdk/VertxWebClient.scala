@@ -1,7 +1,7 @@
-package com.galacticfog.gestalt.cm.sdk
+package com.galacticfog.gestalt.vertx.sdk
 
 import akka.util.Timeout
-import com.galacticfog.gestalt.cm.sdk.config.CMClientConfig
+import com.galacticfog.gestalt.vertx.sdk.config.VertxClientConfig
 import org.joda.time.DateTime
 import play.api.libs.json.JsValue
 import play.api.libs.ws._
@@ -18,7 +18,7 @@ case class UnknownAPIException(resp: String) extends Throwable(resp)
 case class ResourceNotFoundException(url: String) extends Throwable("resource not found: " + url)
 
 
-class CMWebClient(val client: WSClient, val protocol: String, val hostname: String, val port: Int, val username: String, val password: String) {
+class VertxWebClient(val client: WSClient, val protocol: String, val hostname: String, val port: Int, val username: String, val password: String) {
 
   private val TASK_TIMEOUT = 10000
 
@@ -94,13 +94,13 @@ class CMWebClient(val client: WSClient, val protocol: String, val hostname: Stri
   }
 }
 
-object CMWebClient {
+object VertxWebClient {
   def apply(wsclient: WSClient, protocol: String, hostname: String, port: Int, username: String, password: String) =
-    new CMWebClient(client = wsclient, protocol = protocol, hostname = hostname, port = port, username = username, password = password)
+    new VertxWebClient(client = wsclient, protocol = protocol, hostname = hostname, port = port, username = username, password = password)
 
   def apply(protocol: String, hostname: String, port: Int, username: String, password: String)(implicit app: Application) =
-    new CMWebClient(client = WS.client, protocol = protocol, hostname = hostname, port = port, username = username, password = password)
+    new VertxWebClient(client = WS.client, protocol = protocol, hostname = hostname, port = port, username = username, password = password)
 
-  def apply( billingConfig: CMClientConfig )(implicit app: Application) =
-    new CMWebClient(client = WS.client, billingConfig.protocol,billingConfig.host,billingConfig.port,billingConfig.username,billingConfig.password)
+  def apply( vertxConfig: VertxClientConfig )(implicit app: Application) =
+    new VertxWebClient(client = WS.client, vertxConfig.protocol,vertxConfig.host,vertxConfig.port,vertxConfig.username,vertxConfig.password)
 }
