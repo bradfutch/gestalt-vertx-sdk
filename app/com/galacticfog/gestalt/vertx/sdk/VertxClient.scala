@@ -1,6 +1,6 @@
 package com.galacticfog.gestalt.vertx.sdk
 
-import com.galacticfog.gestalt.vertx.io.domain.VertxDao
+import com.galacticfog.gestalt.vertx.io.domain.{VertxEvent, VertxDao}
 
 import com.galacticfog.gestalt.vertx.sdk.config.VertxClientConfig
 import play.api.Application
@@ -23,6 +23,10 @@ class VertxClient( val client : VertxWebClient, val protocol: String, val hostna
 
   def getVerticle( id : String ) : Try[VertxDao] = {
     convertVerticle( client.easyGet( "/verticles/" + id ) )
+  }
+
+  def invokeVerticle( id : String, event : VertxEvent ) : Try[VertxDao] = {
+    convertVerticle( client.easyPost( s"/verticles/$id/invoke", Json.toJson(event) ) )
   }
 
   def searchVerticle( params : Map[String,String] ) : Try[VertxDao] = {
